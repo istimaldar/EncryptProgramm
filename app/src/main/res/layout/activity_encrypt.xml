@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:text="Тип алгоритма"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/type_text" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/type" />
+
+    <TextView
+        android:text="Алгоритм"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/algorithm_text" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/algorithm" />
+
+    <TextView
+        android:text="Размер ключа"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/size_text" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/size" />
+
+    <TextView
+        android:text="Метод выбора ключа"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/method_text" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/method" />
+
+    <TextView
+        android:text="Имя ключа:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/keyNameText" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/keyName" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:text="Назад"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/back"
+                android:layout_weight="1.49" />
+
+            <Button
+                android:text="Шифровать"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/action_button"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/result_text"
+        android:layout_weight="0.53" />
+</LinearLayout>
