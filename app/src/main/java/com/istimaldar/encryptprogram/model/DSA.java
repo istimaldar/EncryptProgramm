@@ -63,12 +63,13 @@ public class DSA implements SymmetricEncryptor {
         return ecipher.doFinal(data);
     }
 
-    public byte[] encrypt(byte[] data) throws NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, IOException {
+    public byte[] encryptWithNewKey(byte[] data, String name) throws NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, IOException {
         SecretKey key = generateKeys();
-        saveKey(key, "DSA.key");
+        saveKey(key, name +".dsakey");
         return encrypt(data, key);
     }
-    public byte[] decrypt(byte[] data) {
+
+    public byte[] decrypt(byte[] data, String path) {
         try {
             SecretKey key = loadKey("DSAkey");
             return decrypt(data, key);
@@ -76,6 +77,11 @@ public class DSA implements SymmetricEncryptor {
         catch (Throwable e) {
             return new byte[0];
         }
+    }
+
+    public byte[] encryptWithOldKey(byte[] data, String path) throws NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, IOException, ClassNotFoundException {
+        SecretKey key = loadKey(path);
+        return encrypt(data, key);
     }
 
     private File createFile(String name) throws IOException {

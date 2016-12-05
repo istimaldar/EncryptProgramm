@@ -58,9 +58,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
         android:ems="10"
         android:id="@+id/keyName" />
+
+    <TextView
+        android:text="Сохранить результат в:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/saveResultText" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/saveResult" />
+
+    <TextView
+        android:text="Название файла:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/outputFileNameText" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/outputFileName" />
+
+    <Button
+        android:text="Загрузить ключ"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/loadKey" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/keyPath" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -95,5 +129,5 @@
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/result_text"
-        android:layout_weight="0.53" />
+        android:layout_weight="0.78" />
 </LinearLayout>

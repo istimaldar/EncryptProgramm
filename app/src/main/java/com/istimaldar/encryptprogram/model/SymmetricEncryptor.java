@@ -28,6 +28,8 @@ public interface SymmetricEncryptor extends Encryptor {
     abstract public byte[] decrypt(byte[] data, SecretKey key) throws NoSuchAlgorithmException,
             NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException,
             BadPaddingException;
-    public byte[] encrypt(byte[] data) throws NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, IOException;
-    public byte[] decrypt(byte[] data);
+    abstract public  byte[] encryptWithNewKey(byte[] data, String name) throws NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, IOException;
+    abstract public byte[] decrypt(byte[] data, String path);
+    abstract public  byte[] encryptWithOldKey(byte[] data, String path) throws NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, IOException, ClassNotFoundException;
+
 }

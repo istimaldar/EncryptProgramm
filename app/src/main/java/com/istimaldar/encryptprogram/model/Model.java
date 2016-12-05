@@ -31,9 +31,14 @@ public class Model {
         data = text.getBytes();
     }
 
-    public void encrypt(Encryptor encrypter) {
+    public void encrypt(Encryptor encrypter, boolean isKeyNew, String name) {
         try {
-            proceededData = encrypter.encrypt(data);
+            if (isKeyNew) {
+                proceededData = encrypter.encryptWithNewKey(data, name);
+            }
+            else {
+                proceededData = encrypter.encryptWithOldKey(data, name);
+            }
         }
         catch (Throwable e) {
             System.out.print("BAKA!!!");
@@ -41,7 +46,7 @@ public class Model {
     }
 
     public void decrypt(Encryptor decrypter) {
-        proceededData = decrypter.decrypt(data);
+        proceededData = decrypter.decrypt(data, "");
     }
 
     public byte[] getData() {
