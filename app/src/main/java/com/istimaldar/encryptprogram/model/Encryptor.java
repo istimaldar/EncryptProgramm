@@ -15,6 +15,6 @@ import javax.crypto.NoSuchPaddingException;
 public interface Encryptor {
 
     abstract public  byte[] encryptWithNewKey(byte[] data, String name) throws NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, IOException;
-    abstract public byte[] decrypt(byte[] data, String path);
+    abstract public byte[] decrypt(byte[] data, String path) throws IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException, ClassNotFoundException;
     abstract public  byte[] encryptWithOldKey(byte[] data, String path) throws NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, IOException, ClassNotFoundException;
 }

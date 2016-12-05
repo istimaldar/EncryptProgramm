@@ -12,9 +12,10 @@ import android.widget.TextView;
 import com.istimaldar.encryptprogram.R;
 import com.istimaldar.encryptprogram.controller.Controller;
 import com.istimaldar.encryptprogram.controller.Storage;
-import com.istimaldar.encryptprogram.model.DSA;
+import com.istimaldar.encryptprogram.model.DES;
 import com.istimaldar.encryptprogram.model.Encryptor;
 import com.istimaldar.encryptprogram.model.Model;
+import com.istimaldar.encryptprogram.model.RSA;
 
 public class EncryptActivity extends AppCompatActivity  {
 
@@ -28,9 +29,9 @@ public class EncryptActivity extends AppCompatActivity  {
                 R.id.type);
         final TextView algorithmText = (TextView) findViewById(R.id.algorithm_text);
         final Spinner algorithmSelector = Controller.getInstance().setSpinner(this,
-                Storage.ALGORITHMS, 0, R.id.algorithm);
+                Storage.ASYMETRIC_ALGORITHMS, 0, R.id.algorithm);
         final TextView sizeText = (TextView) findViewById(R.id.size_text);
-        final Spinner sizeSelector = Controller.getInstance().setSpinner(this, Storage.SIZES, 0,
+        final Spinner sizeSelector = Controller.getInstance().setSpinner(this, Storage.DES_SIZES, 0,
                 R.id.size);
         final TextView methodText = (TextView) findViewById(R.id.method_text);
         final Spinner methodSelector;
@@ -41,6 +42,9 @@ public class EncryptActivity extends AppCompatActivity  {
         final EditText keyName = (EditText) findViewById(R.id.keyName);
         final Button loadKey = (Button) findViewById(R.id.loadKey);
         final TextView keyPath = (TextView) findViewById(R.id.keyPath);
+        final Spinner output = Controller.getInstance().setSpinner(this, Storage.OUTPUT, 0, R.id.output);
+        final EditText outptFileName = (EditText) findViewById(R.id.outputFileName);
+        final TextView outptFileNameText = (TextView) findViewById(R.id.outputFileNameText);
         final EncryptActivity activity = this;
         View.OnClickListener back = new View.OnClickListener() {
             @Override
@@ -67,7 +71,13 @@ public class EncryptActivity extends AppCompatActivity  {
         View.OnClickListener act = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Encryptor encryptor = new DSA();
+                Encryptor encryptor;
+                if (typeSelector.getSelectedItemPosition() == 0) {
+                    encryptor = new DES();
+                }
+                else {
+                    encryptor = new RSA();
+                }
                 if(action==0) {
                     if (methodSelector.getSelectedItemPosition() == 0) {
                         Model.getInstance().encrypt(encryptor, false, keyPath.getText().toString());
@@ -77,13 +87,36 @@ public class EncryptActivity extends AppCompatActivity  {
                     }
                 }
                 else {
-                    Model.getInstance().decrypt(encryptor);
+                    Model.getInstance().decrypt(encryptor, keyPath.getText().toString());
                 }
-                decsriptionText.setText(Model.getInstance().getProceededDataString());
+                if (output.getSelectedItemPosition() == 0) {
+                    Model.getInstance().saveToFile(outptFileName.getText().toString());
+                }
+                else {
+                    decsriptionText.setText(Model.getInstance().getProceededDataString());
+                }
             }
         };
 
         actionButton.setOnClickListener(act);
+
+        output.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                if(position==0) {
+                    outptFileName.setVisibility(View.VISIBLE);
+                    outptFileNameText.setVisibility(View.VISIBLE);
+                }
+                else {
+                    outptFileName.setVisibility(View.GONE);
+                    outptFileNameText.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
 
         methodSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -100,6 +133,28 @@ public class EncryptActivity extends AppCompatActivity  {
                     loadKey.setVisibility(View.GONE);
                     keyName.setVisibility(View.VISIBLE);
                     keyNameText.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
+        typeSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                if(position==0) {
+                    Controller.getInstance().changeSpinner(algorithmSelector, activity,
+                            Storage.ASYMETRIC_ALGORITHMS, 0);
+                    Controller.getInstance().changeSpinner(sizeSelector, activity,
+                            Storage.DES_SIZES, 0);
+                }
+                else {
+                    Controller.getInstance().changeSpinner(algorithmSelector, activity,
+                            Storage.SYMMETRIC_ALGORITHMS, 0);
+                    Controller.getInstance().changeSpinner(sizeSelector, activity,
+                            Storage.RSA_SIZES, 0);
                 }
             }
             @Override

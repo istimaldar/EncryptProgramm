@@ -62,15 +62,15 @@
         android:id="@+id/keyName" />
 
     <TextView
-        android:text="Сохранить результат в:"
+        android:text="Метод вывода:"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/saveResultText" />
+        android:id="@+id/outputName" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/saveResult" />
+        android:id="@+id/output" />
 
     <TextView
         android:text="Название файла:"

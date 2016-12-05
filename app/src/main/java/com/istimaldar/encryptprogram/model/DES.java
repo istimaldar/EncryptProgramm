@@ -23,7 +23,7 @@ import javax.crypto.SecretKey;
  * Created by Istimaldar on 02.12.2016.
  */
 
-public class DSA implements SymmetricEncryptor {
+public class DES implements SymmetricEncryptor {
     @Override
     public SecretKey generateKeys() throws NoSuchAlgorithmException {
         return KeyGenerator.getInstance("DES").generateKey();
@@ -31,7 +31,7 @@ public class DSA implements SymmetricEncryptor {
 
     @Override
     public void saveKey(SecretKey key, String path) throws FileNotFoundException, IOException {
-        File file = createFile(path);
+        File file = Model.getInstance().createFile(path);
         FileOutputStream fout = new FileOutputStream(file);
         ObjectOutputStream oos = new ObjectOutputStream(fout);
         oos.writeObject(key);
@@ -39,7 +39,7 @@ public class DSA implements SymmetricEncryptor {
 
     @Override
     public SecretKey loadKey(String path) throws FileNotFoundException, IOException, ClassNotFoundException {
-        File file = createFile(path);
+        File file = new File(path);
         FileInputStream fin = new FileInputStream(file);
         ObjectInputStream ois = new ObjectInputStream(fin);
         return  (SecretKey) ois.readObject();
@@ -65,32 +65,17 @@ public class DSA implements SymmetricEncryptor {
 
     public byte[] encryptWithNewKey(byte[] data, String name) throws NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, IOException {
         SecretKey key = generateKeys();
-        saveKey(key, name +".dsakey");
+        saveKey(key, name +".deskey");
         return encrypt(data, key);
     }
 
-    public byte[] decrypt(byte[] data, String path) {
-        try {
-            SecretKey key = loadKey("DSAkey");
-            return decrypt(data, key);
-        }
-        catch (Throwable e) {
-            return new byte[0];
-        }
+    public byte[] decrypt(byte[] data, String path) throws IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException, ClassNotFoundException {
+        SecretKey key = loadKey(path);
+        return decrypt(data, key);
     }
 
     public byte[] encryptWithOldKey(byte[] data, String path) throws NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, IOException, ClassNotFoundException {
         SecretKey key = loadKey(path);
         return encrypt(data, key);
-    }
-
-    private File createFile(String name) throws IOException {
-        String filePath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        File file = new File(filePath + "/keys/", name);
-        if (!file.exists() || file.isDirectory()) {
-            file.getParentFile().mkdirs();
-            file.createNewFile();
-        }
-        return file;
     }
 }

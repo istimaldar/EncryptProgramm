@@ -46,4 +46,13 @@ public class Controller {
         return spinner;
     }
 
+    public void changeSpinner(Spinner spinner, Activity parrent, String[]list, int var) {
+        ArrayAdapter<String> sourceAdapter = new ArrayAdapter<>(parrent,
+                android.R.layout.simple_spinner_item, list);
+        sourceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(sourceAdapter);
+        spinner.setPrompt("Title");
+        spinner.setSelection(var);
+    }
+
 }

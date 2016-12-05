@@ -1,6 +1,5 @@
 package com.istimaldar.encryptprogram.model;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -12,10 +11,10 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
 /**
- * Created by Istimaldar on 02.12.2016.
+ * Created by Istimaldar on 05.12.2016.
  */
 
-public interface SymmetricEncryptor extends Encryptor {
+public interface AssymetricEncryptor extends Encryptor {
 
     abstract public SecretKey generateKeys() throws NoSuchAlgorithmException;
     abstract public void saveKey(SecretKey key, String path) throws FileNotFoundException,
